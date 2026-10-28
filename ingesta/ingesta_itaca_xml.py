@@ -1,8 +1,6 @@
 import hashlib
-import hmac
 import json
 import logging
-import os
 import xml.etree.ElementTree as ET
 from datetime import date
 from pathlib import Path
@@ -39,11 +37,10 @@ CONFIG = {
 }
 
 
-def anonimizar_nia(nia):
+def anonimizar_nia(nia: str | None) -> str | None:
     if nia is None:
         return None
-    clave = os.environ["NIA_SECRET"].encode()
-    return hmac.new(clave, nia.encode(), hashlib.sha256).hexdigest()[:16]
+    return hashlib.sha256(str(nia).encode()).hexdigest()[:10]
 
 
 def listar_anios():
