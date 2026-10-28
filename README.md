@@ -23,7 +23,7 @@ bigdata-p1-itaca/
 ├── ingesta/
 │   ├── ingesta_itaca_xml.py
 │   └── validar_raw.py
-├── docs/img/                         (capturas)
+├── local/capturas/                         (capturas)
 ├── .gitignore
 └── README.md
 ```
@@ -105,7 +105,7 @@ carpeta por curso académico con un XML por tabla.
 
 1. **Organización de la entrada.** Las exportaciones se colocan en
    `data/exportaciones/<curso>/` (de `2021-2022` a `2025-2026`), un XML por tabla.
-2. **Inspección de los XML.** Un script auxiliar mostró que los datos vienen como
+2. **Inspección de los XML.** Un script auxiliar mostró qu  e los datos vienen como
    **atributos** (`<alumno NIA="..." curso="..."/>`) y no como elementos hijo, y que
    los registros cuelgan de `<centro><tabla>...`, no directamente de la raíz.
    Esto explicaba que la primera versión (con `findtext`) generase todo `null`.
@@ -163,22 +163,3 @@ python ingesta/validar_raw.py
 | `Nota` se guarda como string | No se transforman tipos en `raw` |
 | Rutas con `Path(__file__)` | El script funciona desde cualquier directorio de ejecución |
 | `data/` y `.env` en `.gitignore` | No versionar datos ni secretos |
-
-#### 5. Validaciones realizadas
-
-| Validación | Resultado |
-|------------|-----------|
-| Se generan las tablas `alumnos`, `cursos`, `calificaciones`, `contenidos` | [OK / detalle] |
-| Las columnas coinciden con el esquema y no hay campos identificativos | [OK / detalle] |
-| Todo NIA tiene formato de hash (16 hex) | [OK / detalle] |
-| Calificaciones.Modulo existe en Contenidos (`Anyo + Curso + Modulo`) | [OK / nº de huérfanos] |
-| Calificaciones y Alumnos.Curso existen en Cursos (`Anyo + Codigo`) | [OK / nº de huérfanos] |
-| Calificaciones.NIA existe en Alumnos (`Anyo + NIA + Curso`) | [OK / nº de huérfanos] |
-
-#### 6. Limitaciones conocidas
-
-- [Rellena con los huérfanos o avisos reales de la validación, p. ej. alumnos
-  con notas en un curso distinto al de su matrícula.]
-- La conservación de `NIA_SECRET` es responsabilidad de quien ejecuta la ingesta.
-- El formato de exportación de ITACA puede cambiar entre cursos; si alguna
-  carpeta da 0 registros, hay que reinspeccionar sus XML.
