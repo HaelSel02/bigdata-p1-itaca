@@ -11,7 +11,6 @@ el NIA y descartando cualquier dato identificativo del alumnado.
 ```mermaid
 graph LR
     A[Fuente de datos<br/>ITACA · exportación XML] --> B[Procesamiento<br/>ingesta_itaca_xml.py] --> C[Almacenamiento<br/>data/raw · JSON]
-    C --> D[Validación<br/>validar_raw.py]
 ```
 
 ## Estructura del proyecto
